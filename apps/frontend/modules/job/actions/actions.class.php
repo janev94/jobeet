@@ -9,17 +9,22 @@
  */
 class jobActions extends sfActions
 {
-  public function executeIndex(sfWebRequest $request)
-  {
-    $this->jobeet_job_list = JobeetJobPeer::doSelect(new Criteria());
-  }
+	public function executeIndex(sfWebRequest $request)
+	{
+	  $this->categories = JobeetCategoryPeer::getWithJobs();
+	}
 
   public function executeShow(sfWebRequest $request)
-  {    
-    $this->job = $this->getRoute()->getObject(); 
-    $this->forward404Unless($this->job);
-  }
+  {
+    $this->job = $this->getRoute()->getObject();
+   }
 
+//   public function executeShow(sfWebRequest $request)
+//   {
+//   	$this->job = JobeetJobPeer::retrieveByPk($request->getParameter('id'));
+//   	$this->forward404Unless($this->job);
+//   }
+  
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new JobeetJobForm();
