@@ -36,7 +36,10 @@ class jobActions extends sfActions
   
 	public function executeEdit(sfWebRequest $request)
   	{
-  		$this->form = new JobeetJobForm($this->getRoute()->getObject());
+  		$job = $this->getRoute()->getObject();
+  		$this->forward404If($job->getIsActivated());
+  		
+  		$this->form = new JobeetJobForm($job);  		
   	}
   
   	public function executeUpdate(sfWebRequest $request)
@@ -83,4 +86,15 @@ class jobActions extends sfActions
   		$this->redirect($this->generateUrl('job_show_user', $job));
   	}
   
+  	public function executeExtend(sfWebRequest $request)
+  	{
+  		$request->checkCSRFProtection();
+  	
+  		$job = $this->getRoute()->getObject();
+  		$this->forward404Unless($job->extend());
+  	
+  		$this->getUser()->setFlash('notice', sprintf('Your job validity has been extended until %s.', $job->getExpiresAt('m/d/Y')));
+  	
+  		$this->redirect($this->generateUrl('job_show_user', $job));
+  	}
 }
