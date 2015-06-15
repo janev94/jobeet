@@ -7,10 +7,15 @@ category:
 
 job:
   class:   sfPropelRouteCollection
-  options: { model: JobeetJob }
+  options:
+    model:          JobeetJob
+    column:         token
+    object_actions: { publish: put }
+  requirements:
+    token: \w+
 
 job_show_user:
-  url:     /job/:company_slug/:location_slug/:id/:position_slug
+  url:     /job/:company_slug/:location_slug/:token/:position_slug
   class:   sfPropelRoute
   options:
     model: JobeetJob
@@ -18,7 +23,7 @@ job_show_user:
     method_for_criteria: doSelectActive
   param:   { module: job, action: show }
   requirements:
-    id: \d+
+    token: \w+
     sf_method: [GET]
 
 # default rules
