@@ -2,6 +2,7 @@
 <?php include_javascripts_for_form($form) ?>
  
 <?php echo form_tag_for($form, '@job') ?>
+<form>
   <table id="job_form">
     <tfoot>
       <tr>
