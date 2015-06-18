@@ -46,4 +46,12 @@ class JobeetJobPeer extends BaseJobeetJobPeer
 	
 		return self::doDelete($criteria);
 	}
+	
+	static public function getLatestPost()
+	{
+		$criteria = new Criteria();
+		self::addActiveJobsCriteria($criteria);
+	
+		return JobeetJobPeer::doSelectOne($criteria);
+	}
 }
